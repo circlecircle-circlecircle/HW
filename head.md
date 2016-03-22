@@ -4,73 +4,20 @@ NBA 2014-2015球季 各隊分析
 ``` r
 #install.packages("SportsAnalytics")
 library(SportsAnalytics)
-```
-
-    ## Warning: package 'SportsAnalytics' was built under R version 3.2.4
-
-``` r
 NBA1415<-fetch_NBAPlayerStatistics("14-15")
 ```
 
 各隊最辛苦的球員
 ----------------
 
-我的程式碼:
-
-``` r
-HardestPerson<-aggregate(TotalMinutesPlayed~Team,NBA1415,max)
-NBA1415Hardest<-merge(NBA1415,HardestPerson)
-output<-NBA1415Hardest[order(NBA1415Hardest$TotalMinutesPlayed,decreasing = T),c("Team","Name","TotalMinutesPlayed")]
-library(knitr)
-kable(output, digits=2)
-```
-
-|     | Team | Name             |  TotalMinutesPlayed|
-|-----|:-----|:-----------------|-------------------:|
-| 11  | HOU  | James Harden     |                2979|
-| 18  | MIN  | Andrew Wiggins   |                2971|
-| 25  | POR  | Damian Lillard   |                2928|
-| 13  | LAC  | Chris Paul       |                2860|
-| 30  | WAS  | John Wall        |                2841|
-| 24  | PHO  | Eric Bledsoe     |                2799|
-| 3   | BRO  | Joe Johnson      |                2787|
-| 6   | CLE  | Kyrie Irving     |                2735|
-| 7   | DAL  | Monta Ellis      |                2698|
-| 19  | NOR  | Tyreke Evans     |                2695|
-| 15  | MEM  | Marc Gasol       |                2690|
-| 5   | CHI  | Pau Gasol        |                2682|
-| 26  | SAC  | Ben Mclemore     |                2674|
-| 8   | DEN  | Ty Lawson        |                2668|
-| 16  | MIA  | Goran Dragic     |                2641|
-| 29  | UTA  | Gordon Hayward   |                2618|
-| 10  | GSW  | Stephen Curry    |                2613|
-| 9   | DET  | Ke Caldwell-pope |                2591|
-| 22  | ORL  | Victor Oladipo   |                2572|
-| 17  | MIL  | G Antetokounmpo  |                2542|
-| 2   | BOS  | Avery Bradley    |                2427|
-| 28  | TOR  | Kyle Lowry       |                2422|
-| 1   | ATL  | Kyle Korver      |                2418|
-| 12  | IND  | Solomon Hill     |                2380|
-| 4   | CHA  | Gerald Henderson |                2323|
-| 23  | PHI  | Nerlens Noel     |                2311|
-| 27  | SAN  | Danny Green      |                2311|
-| 21  | OKL  | Russel Westbrook |                2302|
-| 14  | LAL  | Wesley Johnson   |                2244|
-| 20  | NYK  | Shane Larkin     |                1864|
+This is an R Markdown format used for publishing markdown documents to GitHub. When you click the **Knit** button all R code chunks are run and a markdown file (.md) suitable for publishing to GitHub is generated.
 
 各隊得分王
 ----------
 
-計算依據全季總得分最多的球員，我的程式碼:
+計算依據全季總得分最多的球員
 
-``` r
-MaxPoint<-aggregate(TotalPoints~Team,NBA1415,max)
-#tapply(NBA1415$TotalPoints,NBA1415$Team,max)
-NBA1415MaxPoint<-merge(NBA1415,MaxPoint)
-output<-NBA1415MaxPoint[order(NBA1415MaxPoint$TotalPoints,decreasing = T),c("Team","Name","TotalPoints")]
-library(knitr)
-kable(output, digits=2)
-```
+\`\`\`\`
 
 |     | Team | Name             |  TotalPoints|
 |-----|:-----|:-----------------|------------:|
@@ -108,97 +55,19 @@ kable(output, digits=2)
 各隊最有效率的球員
 ------------------
 
-我的程式碼:
+You can also embed plots, for example:
 
-``` r
-EffectivePlayer<-aggregate(TotalPoints/TotalMinutesPlayed~Name,NBA1415,max)
-NBA1415EffectivePlayer<-merge(NBA1415,EffectivePlayer)
-EffectivePlayerTeam<-aggregate(TotalPoints/TotalMinutesPlayed~Team,NBA1415EffectivePlayer,max)
-NBA1415EffectivePlayerTeam<-merge(NBA1415EffectivePlayer,EffectivePlayerTeam)
-output<-NBA1415EffectivePlayerTeam[order(NBA1415EffectivePlayerTeam$`TotalPoints/TotalMinutesPlayed`,decreasing = T),c("Team","Name","TotalPoints/TotalMinutesPlayed")]
-library(knitr)
-kable(output, digits=2)
-```
+![](head_files/figure-markdown_github/pressure-1.png)<!-- -->
 
-|     | Team | Name             |  TotalPoints/TotalMinutesPlayed|
-|-----|:-----|:-----------------|-------------------------------:|
-| 21  | OKL  | Russel Westbrook |                            0.82|
-| 11  | HOU  | James Harden     |                            0.74|
-| 10  | GSW  | Stephen Curry    |                            0.73|
-| 26  | SAC  | Demarcus Cousins |                            0.71|
-| 6   | CLE  | Lebron James     |                            0.70|
-| 20  | NYK  | Carmelo Anthony  |                            0.68|
-| 16  | MIA  | Dwyane Wade      |                            0.67|
-| 19  | NOR  | Anthony Davis    |                            0.67|
-| 15  | MEM  | Tyrus Thomas     |                            0.67|
-| 25  | POR  | Lamarcu Aldridge |                            0.66|
-| 14  | LAL  | Kobe Bryant      |                            0.65|
-| 2   | BOS  | Isaiah Thomas    |                            0.64|
-| 13  | LAC  | Blake Griffin    |                            0.62|
-| 28  | TOR  | Louis Williams   |                            0.62|
-| 24  | PHO  | Gerald Green     |                            0.61|
-| 18  | MIN  | Kevin Martin     |                            0.60|
-| 7   | DAL  | Charl Villanueva |                            0.59|
-| 5   | CHI  | Derrick Rose     |                            0.59|
-| 3   | BRO  | Brook Lopez      |                            0.59|
-| 12  | IND  | Paul George      |                            0.58|
-| 23  | PHI  | Tony Wroten      |                            0.57|
-| 22  | ORL  | Nikola Vucevic   |                            0.56|
-| 29  | UTA  | Gordon Hayward   |                            0.56|
-| 4   | CHA  | Jannero Pargo    |                            0.55|
-| 9   | DET  | Brandon Jennings |                            0.54|
-| 1   | ATL  | Jeff Teague      |                            0.52|
-| 27  | SAN  | Kawhi Leonard    |                            0.52|
-| 8   | DEN  | Danilo Gallinari |                            0.52|
-| 17  | MIL  | Ersan Ilyasova   |                            0.51|
-| 30  | WAS  | John Wall        |                            0.49|
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 
 各隊三分球出手最準的球員
 ------------------------
 
-我的程式碼:
+You can also embed plots, for example:
 
 ``` r
-ThreeMadeName<-aggregate(ThreesMade/ThreesAttempted~Name,NBA1415,max)
-NBA1415Name<-merge(NBA1415,ThreeMadeName)
-ThreeMadeTeam<-aggregate(ThreesMade/ThreesAttempted~Team,NBA1415,max)
-NBA1415Team<-merge(NBA1415Name,ThreeMadeTeam)
-output<-NBA1415Team[order(NBA1415Team$`ThreesMade/ThreesAttempted`,decreasing = T),c("Team","Name","ThreesMade/ThreesAttempted")]
-library(knitr)
-kable(output, digits=2)
+plot(pressure)
 ```
 
-|     | Team | Name             |  ThreesMade/ThreesAttempted|
-|-----|:-----|:-----------------|---------------------------:|
-| 4   | CHA  | Cody Zeller      |                        1.00|
-| 18  | MIL  | John Henson      |                        1.00|
-| 30  | TOR  | Bruno Caboclo    |                        0.67|
-| 14  | LAL  | Dwight Buycks    |                        0.64|
-| 27  | POR  | Victor Claver    |                        0.55|
-| 20  | NOR  | Luke Babbitt     |                        0.51|
-| 8   | DEN  | Jamaal Franklin  |                        0.50|
-| 11  | HOU  | Dwight Howard    |                        0.50|
-| 13  | LAC  | Lester Hudson    |                        0.50|
-| 25  | PHO  | Jerel Mcneal     |                        0.50|
-| 26  | PHO  | Earl Barron      |                        0.50|
-| 28  | SAC  | David Stockton   |                        0.50|
-| 1   | ATL  | Kyle Korver      |                        0.49|
-| 9   | DET  | Tayshaun Prince  |                        0.46|
-| 5   | CHI  | Pau Gasol        |                        0.46|
-| 2   | BOS  | Luigi Datome     |                        0.45|
-| 10  | GSW  | Stephen Curry    |                        0.44|
-| 22  | OKL  | Anthony Morrow   |                        0.43|
-| 17  | MIA  | Shannon Brown    |                        0.43|
-| 29  | SAN  | Tony Parker      |                        0.43|
-| 7   | DAL  | Richar Jefferson |                        0.43|
-| 6   | CLE  | Kyrie Irving     |                        0.42|
-| 21  | NYK  | Jose Calderon    |                        0.42|
-| 32  | WAS  | Bradley Beal     |                        0.41|
-| 12  | IND  | Paul George      |                        0.41|
-| 24  | PHI  | Hollis Thompson  |                        0.40|
-| 15  | MEM  | Courtney Lee     |                        0.40|
-| 16  | MEM  | Jordan Adams     |                        0.40|
-| 31  | UTA  | Jeremy Evans     |                        0.40|
-| 23  | ORL  | Channing Frye    |                        0.39|
-| 19  | MIN  | Shabazz Muhammad |                        0.39|
-| 3   | BRO  | Deron Williams   |                        0.37|
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
